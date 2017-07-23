@@ -1,29 +1,35 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types'
+import React, { Component, PropTypes } from 'react';
+import * as Actions from './Actions.js';
+import CounterStore from './stores/CounterStore.js';
 
 class ClickCounter extends Component {
 	constructor(props){
 		super(props);
+		this.onChange = this.onChange.bind(this);
 		this.onClickPlusButton = this.onClickPlusButton.bind(this);
 	     this.onClickMinusButton = this.onClickMinusButton.bind(this);
-		this.state = { count: props.initValue }
+		this.state = {
+             count: CounterStore.getCounterValues()[props.caption]
+         }
 	}
 	componentWillMount(){
-		console.log("enter componentWillMount:" + this.props.caption)
+		// console.log("enter componentWillMount:" + this.props.caption)
 	}
 	componentDidMount(){
-		console.log("enter componentDidMount:" + this.props.caption)
+		// console.log("enter componentDidMount:" + this.props.caption);
+	   CounterStore.addChangeListener(this.onChange);
 	}
+    componentWillUnmount() {
+       CounterStore.removeChangeListener(this.onChange);
+    }
 	onClickPlusButton(){
-		// this.setState({ count: this.state.count + 1});
-		this.updateCount(true);
+		 Actions.increment(this.props.caption);
 	}
 	onClickMinusButton(){
-		// this.setState({ count: this.state.count - 1})
-		this.updateCount(false);
+		Actions.decrement(this.props.caption);
 	}
 	componentWillReceiveProps(nextProps){
-		console.log("enter componentWillReceiveProps:" + this.props.caption)
+		// console.log("enter componentWillReceiveProps:" + this.props.caption)
 	}
 	shouldComponentUpdate(nextProps, nextState){
        if(nextProps.caption !== this.props.caption){
@@ -34,14 +40,12 @@ class ClickCounter extends Component {
        }
        return false;
 	}
-	updateCount(isIncrement){
-		const previousValue = this.state.count;
-		const newValue = isIncrement ? previousValue + 1 : previousValue -1;
-		this.setState({count: newValue});
-		this.props.onUpdate(newValue, previousValue);
-	}
+     onChange() {
+       const newCount = CounterStore.getCounterValues()[this.props.caption];
+       this.setState({count: newCount});
+     }
 	render(){
-		console.log("enter componentRender:" + this.props.caption)
+		// console.log("enter componentRender:" + this.props.caption)
 		const caption = this.props.caption
 		const countStyle = {
 			margin: '30px'
