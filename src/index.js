@@ -1,8 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-// import App from './App';
-import CounterPanel from './CounterPanel';
+import CounterPanel from './views/CounterPanel';
 import registerServiceWorker from './registerServiceWorker';
 
 ReactDOM.render(
