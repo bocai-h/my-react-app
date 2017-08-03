@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react';
 
-import store from '../stores/Store.js';
 import * as Actions from '../Actions.js';
 
 const styleButton = {
@@ -27,8 +26,8 @@ ClickCounter.propTypes = {
 };
 
 class CounterContainer extends Component{
-	constructor(props){ 
-		super(props);
+	constructor(props,context){ 
+		super(props,context);
 		this.onIncrement = this.onIncrement.bind(this);
 		this.onDecrement = this.onDecrement.bind(this);
 		this.onChange = this.onChange.bind(this);
@@ -37,14 +36,14 @@ class CounterContainer extends Component{
 	}
 	getOwnState(){
 		return {
-			value: store.getState()[this.props.caption]
+			value: this.context.store.getState()[this.props.caption]
 		};
 	}
 	onIncrement(){
-		store.dispatch(Actions.increment(this.props.caption));
+		this.context.store.dispatch(Actions.increment(this.props.caption));
 	}
 	onDecrement(){
-		store.dispatch(Actions.decrement(this.props.caption));
+		this.context.store.dispatch(Actions.decrement(this.props.caption));
 	}
 	onChange(){
 		this.setState(this.getOwnState());
@@ -54,10 +53,10 @@ class CounterContainer extends Component{
 			   (nextState.value !== this.state.value));
 	}
 	componentDidMount(){
-		store.subscribe(this.onChange);
+		this.context.store.subscribe(this.onChange);
 	}
 	componentWillUnmount(){
-		store.unsubscribe(this.onChange);
+		this.context.store.unsubscribe(this.onChange);
 	}
 	render(){
 		return <ClickCounter caption = { this.props.caption } 
@@ -68,4 +67,7 @@ class CounterContainer extends Component{
 CounterContainer.propTypes = {
   caption: PropTypes.string.isRequired
 };
+CounterContainer.contextTypes = {
+  store: PropTypes.object
+}
 export default CounterContainer;
