@@ -3,8 +3,13 @@ import React, { Component } from 'react';
 
 import store from '../stores/Store.js';
 
-class Summary extends Component {
+function Summary(props) {
+  return(
+    <div>Total count: { props.sum } </div>
+  );
+}
 
+class SummaryContainer extends Component{
   constructor(props) {
     super(props);
 
@@ -39,9 +44,8 @@ class Summary extends Component {
   render() {
     const sum = this.state.sum;
     return (
-      <div>Total Count: {sum}</div>
+      <Summary sum = { this.state.sum } />
     );
   }
 }
-
-export default Summary;
+export default SummaryContainer;

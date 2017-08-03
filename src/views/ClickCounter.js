@@ -7,17 +7,16 @@ const styleButton = {
 	margin: "10px"
 };
 
-class ClickCounter extends Component{
-	render() {
-		const { caption, onIncrement, onDecrement, value } = this.props;
-		return(
-			<div>
+function ClickCounter(props){
+	
+  const { caption, onIncrement, onDecrement, value } = props;
+  return(
+		  <div>
                   <button style={ styleButton } onClick={ onIncrement }>+</button>
                   <button style={ styleButton } onClick={ onDecrement }>-</button>
                   <span>{caption}:{value}</span>
 			</div>
-		);
-	}
+         );
 }
 
 ClickCounter.propTypes = {
