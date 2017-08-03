@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import ClickCounter from './ClickCounter';
+import CounterContainer from './ClickCounter';
 import Summary from './Summary.js';
 
 const style = {
@@ -10,9 +10,9 @@ class CounterPanel extends Component {
   render(){
   	return(
             <div style={ style }>
-              <ClickCounter caption="First" />
-  	           <ClickCounter caption="Second" />
-  	           <ClickCounter caption="Third" />
+              <CounterContainer caption="First" />
+  	           <CounterContainer caption="Second" />
+  	           <CounterContainer caption="Third" />
               <hr />
               <Summary />
             </div>
